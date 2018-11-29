@@ -244,6 +244,29 @@
         // Add an event listener so that the polygon is captured,  call the
         // searchWithinPolygon function. This will show the markers in the polygon,
         // and hide any outside of it.
+
+        // drawingManager.addListener('overlaycomplete', function(event) {
+        //   // First, check if there is an existing polygon.
+        //   // If there is, get rid of it and remove the markers
+        //   if (polygon) {
+        //     polygon.setMap(null);
+        //     hideListings(markers);
+        //   }
+        //   // Switching the drawing mode to the HAND (i.e., no longer drawing).
+        //   drawingManager.setDrawingMode(null);
+        //   // Creating a new editable polygon from the overlay.
+        //   polygon = event.overlay;
+        //   polygon.setEditable(true);
+        //   // Searching within the polygon.
+        //   searchWithinPolygon();
+        //   // Make sure the search is re-done if the poly is changed.
+        //   polygon.getPath().addListener('set_at', searchWithinPolygon);
+        //   polygon.getPath().addListener('insert_at', searchWithinPolygon);
+        // });
+
+        // QUIZ: Drawing and GEOMETRY (Video 18)
+        // Add an event listener so that the polygon is captured, it alerts the
+        // user the area with the polygon
         drawingManager.addListener('overlaycomplete', function(event) {
           // First, check if there is an existing polygon.
           // If there is, get rid of it and remove the markers
@@ -256,11 +279,19 @@
           // Creating a new editable polygon from the overlay.
           polygon = event.overlay;
           polygon.setEditable(true);
-          // Searching within the polygon.
-          searchWithinPolygon();
-          // Make sure the search is re-done if the poly is changed.
-          polygon.getPath().addListener('set_at', searchWithinPolygon);
-          polygon.getPath().addListener('insert_at', searchWithinPolygon);
+
+          // console.log ('Polygon area: ', polygon.latLngs);
+
+          // get the area
+          const polArea = google.maps.geometry.spherical.computeArea(polygon.getPath());  
+          console.log ('Polygon area: ', polArea);
+          alert (`Polygon area: ${polArea}`);
+
+          // // Searching within the polygon.
+          // searchWithinPolygon();
+          // // Make sure the search is re-done if the poly is changed.
+          // polygon.getPath().addListener('set_at', searchWithinPolygon);
+          // polygon.getPath().addListener('insert_at', searchWithinPolygon);
         });
       }
 
@@ -371,7 +402,7 @@
 
     <script async defer
         src=
-        "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=MYAPIKEY&v=3&callback=initMap">
+        "https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing&key=AIzaSyC32-tMB45_JH_iJDsCEq9X9D8chLB09AU&v=3&callback=initMap">
     </script>
 
   </body>
